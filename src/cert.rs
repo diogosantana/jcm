@@ -74,10 +74,18 @@ pub fn fetch_chain(url_str: &str, timeout_secs: u64) -> Result<Vec<FetchedCert>>
 }
 
 fn resolve_socket(addr: &str) -> Result<SocketAddr> {
-    let mut addrs = addr
+    let addrs: Vec<SocketAddr> = addr
         .to_socket_addrs()
-        .with_context(|| format!("resolve {addr}"))?;
-    addrs.next().context("no socket addresses resolved")
+        .with_context(|| format!("resolve {addr}"))?
+        .collect();
+    if addrs.is_empty() {
+        bail!("no socket addresses resolved for {addr}");
+    }
+    // Prefer IPv4: Windows often lists AAAA first, and GHA windows-latest has no outbound IPv6.
+    if let Some(v4) = addrs.iter().find(|a| a.is_ipv4()) {
+        return Ok(*v4);
+    }
+    Ok(addrs[0])
 }
 
 fn permissive_tls_config() -> Result<ClientConfig> {

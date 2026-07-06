@@ -21,6 +21,26 @@ Import TLS certificates from URLs into the JVM `cacerts` keystore under `jcm-*` 
 | `--alias-prefix <pfx>` | Alias prefix (default: `jcm-`) |
 | `--elevate auto\|always\|never` | Elevation for protected `cacerts` |
 
+### Environment variables
+
+CLI flags take precedence over environment variables.
+
+| Variable | Purpose |
+|----------|---------|
+| `JAVA_HOME` | JDK path (`--java-home`) |
+| `JCM_CACERTS` | Keystore file (`--cacerts`) |
+| `JCM_STORE_PASS` | Keystore password (`--store-pass`) |
+| `JCM_CHAIN` | Chain selection (`--chain`) |
+| `JCM_ALIAS_PREFIX` | Alias prefix (`--alias-prefix`) |
+| `JCM_ELEVATE` | Elevation mode (`--elevate`) |
+| `JCM_QUIET` | Quiet output (`-q`) |
+| `JCM_VERBOSE` | Verbose output (`-v`) |
+| `JCM_ALIAS` | Alias for `add`, `remove`, and `show` |
+| `JCM_URL` | URL for `add` and `inspect` |
+| `JCM_DRY_RUN` | Dry-run for `add` and `remove` |
+| `JCM_LIST_ALL` | List all entries (`list --all`) |
+| `JCM_GRAPH` | Chain tree (`inspect --graph`) |
+
 ---
 
 ## `add`

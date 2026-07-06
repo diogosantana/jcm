@@ -126,10 +126,23 @@ jcm remove internal-api --dry-run
 
 ### Environment variables
 
+CLI flags take precedence over environment variables.
+
 | Variable | Purpose |
 |----------|---------|
 | `JAVA_HOME` | JDK used when `--java-home` is omitted |
-| `JCM_STORE_PASS` | `cacerts` password |
+| `JCM_CACERTS` | Keystore file (`--cacerts`) |
+| `JCM_STORE_PASS` | `cacerts` password (`--store-pass`) |
+| `JCM_CHAIN` | Chain selection (`--chain`) |
+| `JCM_ALIAS_PREFIX` | Keystore alias prefix (`--alias-prefix`) |
+| `JCM_ELEVATE` | Elevation mode: `auto`, `always`, or `never` |
+| `JCM_QUIET` | Quiet output (`-q`) |
+| `JCM_VERBOSE` | Verbose output (`-v`) |
+| `JCM_ALIAS` | Alias for `add`, `remove`, and `show` |
+| `JCM_URL` | URL for `add` and `inspect` |
+| `JCM_DRY_RUN` | Dry-run for `add` and `remove` |
+| `JCM_LIST_ALL` | List all keystore entries (`list --all`) |
+| `JCM_GRAPH` | Chain tree output (`inspect --graph`) |
 
 ## Elevation
 

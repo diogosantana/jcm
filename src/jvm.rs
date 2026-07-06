@@ -23,7 +23,6 @@ pub fn resolve_jvm(opts: &GlobalOpts) -> Result<JvmInfo> {
     let store_pass = opts
         .store_pass
         .clone()
-        .or_else(|| env::var("JCM_STORE_PASS").ok())
         .unwrap_or_else(|| DEFAULT_STORE_PASS.to_string());
 
     if let Some(cacerts) = &opts.cacerts {
@@ -41,8 +40,6 @@ pub fn resolve_jvm(opts: &GlobalOpts) -> Result<JvmInfo> {
 
     let java_home = if let Some(h) = &opts.java_home {
         h.clone()
-    } else if let Ok(h) = env::var("JAVA_HOME") {
-        PathBuf::from(h)
     } else {
         detect_java_home().context(
             "could not detect JAVA_HOME; set --java-home or JAVA_HOME environment variable",

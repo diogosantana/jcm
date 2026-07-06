@@ -6,7 +6,7 @@ This document is for contributors and anyone building **jcm** from source. End u
 
 | Tool | Version |
 |------|---------|
-| [Rust](https://rustup.rs/) | stable (2021 edition) |
+| [Rust](https://rustup.rs/) | stable (2024 edition, ≥ 1.85) |
 | JDK / JRE | any recent Temurin, OpenJDK, etc. with `java` and `keytool` on `PATH` |
 
 Optional for release packaging:

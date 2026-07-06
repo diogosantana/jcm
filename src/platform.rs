@@ -22,7 +22,38 @@ pub fn is_root() -> bool {
     unsafe { libc::geteuid() == 0 }
 }
 
-#[cfg(not(unix))]
+#[cfg(windows)]
+pub fn is_root() -> bool {
+    use std::mem::MaybeUninit;
+
+    use windows_sys::Win32::Foundation::HANDLE;
+    use windows_sys::Win32::Security::{
+        GetTokenInformation, TokenElevation, TOKEN_ELEVATION, TOKEN_QUERY,
+    };
+    use windows_sys::Win32::System::Threading::{GetCurrentProcess, OpenProcessToken};
+
+    unsafe {
+        let mut token: HANDLE = 0;
+        if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) == 0 {
+            return false;
+        }
+        let mut elevation = MaybeUninit::<TOKEN_ELEVATION>::uninit();
+        let mut size = 0u32;
+        if GetTokenInformation(
+            token,
+            TokenElevation,
+            elevation.as_mut_ptr().cast(),
+            std::mem::size_of::<TOKEN_ELEVATION>() as u32,
+            &mut size,
+        ) == 0
+        {
+            return false;
+        }
+        elevation.assume_init().TokenIsElevated != 0
+    }
+}
+
+#[cfg(not(any(unix, windows)))]
 pub fn is_root() -> bool {
     false
 }

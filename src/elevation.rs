@@ -221,13 +221,6 @@ pub fn prepare_mutation(
 }
 
 #[cfg(windows)]
-fn forward_jcm_env(cmd: &mut runas::Command) {
-    for (key, value) in env::vars().filter(|(k, _)| k.starts_with("JCM_") || k == "JAVA_HOME") {
-        cmd.env(key, value);
-    }
-}
-
-#[cfg(windows)]
 fn relaunch_self_elevated(args: Vec<String>, log: LogMode) -> Result<()> {
     use anyhow::Context;
     if is_elevated() {
@@ -241,8 +234,8 @@ fn relaunch_self_elevated(args: Vec<String>, log: LogMode) -> Result<()> {
     for arg in args.iter().skip(1) {
         cmd.arg(arg);
     }
-    cmd.env(ELEVATED_ENV, "1");
-    forward_jcm_env(&mut cmd);
+    // runas::Command does not support env(); elevated child inherits the system session env.
+    // After UAC, is_elevated() detects the elevated token via platform::is_root().
     let status = cmd.status().context("elevated relaunch")?;
     std::process::exit(status.code().unwrap_or(1));
 }

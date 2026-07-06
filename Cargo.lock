@@ -607,6 +607,7 @@ dependencies = [
  "tracing-subscriber",
  "url",
  "which 8.0.4",
+ "windows-sys 0.48.0",
  "x509-parser",
 ]
 

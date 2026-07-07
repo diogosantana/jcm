@@ -4,6 +4,16 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
 license = "MIT OR Apache-2.0"
+description = "Import TLS certificates from HTTPS URLs into JVM cacerts"
+readme = "README.md"
+repository = "https://github.com/diogosantana/jcm"
+keywords = ["java", "tls", "cacerts", "keytool", "cli"]
+categories = ["command-line-utilities"]
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
 
 [dependencies]
 anyhow = "1.0.103"

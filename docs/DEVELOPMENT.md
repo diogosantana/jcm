@@ -19,7 +19,7 @@ No OpenSSL development libraries are required — TLS fetch uses the `rustls` cr
 ## Clone and build
 
 ```bash
-git clone https://github.com/<your-org>/jcm.git
+git clone https://github.com/diogosantana/jcm.git
 cd jcm
 cargo build --release
 ```
@@ -178,10 +178,18 @@ Cross-compilation may require [cross](https://github.com/cross-rs/cross) or nati
 
 ## Publishing releases (maintainers)
 
-1. Tag a version: `git tag v0.1.0`
-2. Build release artifacts per target (see above)
-3. Create a GitHub Release and upload archives
-4. Update the Releases URL placeholder in README if needed
+Releases are automated via [`.github/workflows/release.yml`](../.github/workflows/release.yml) when a version tag is pushed.
+
+1. Ensure [`CHANGELOG.md`](../CHANGELOG.md) has an entry for the version (e.g. `## [0.1.0]`)
+2. Ensure `version` in [`Cargo.toml`](../Cargo.toml) matches the tag (without the `v` prefix)
+3. Merge changes to `main`
+4. Tag and push: `git tag v0.1.0 && git push origin v0.1.0`
+5. Verify the Release workflow completes in GitHub Actions
+6. Smoke-test artifacts from the [Releases](https://github.com/diogosantana/jcm/releases/latest) page:
+   - `jcm --version` prints the expected version
+   - `jcm list` runs (requires JDK)
+7. Confirm all four archive names match the [README](../README.md) installation table
+8. Confirm the GitHub Release body matches the `CHANGELOG.md` section for that version
 
 ## Troubleshooting
 

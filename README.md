@@ -28,7 +28,7 @@ No Rust toolchain or OpenSSL installation is needed if you use a [pre-built bina
 
 ## Installation
 
-Download the latest release for your platform from the **Releases** page of this repository on GitHub.
+Download the latest release for your platform from the [Releases](https://github.com/diogosantana/jcm/releases/latest) page.
 
 | OS | Archive |
 |----|---------|
@@ -39,7 +39,14 @@ Download the latest release for your platform from the **Releases** page of this
 
 Extract the archive and place `jcm` (or `jcm.exe`) on your `PATH`.
 
-Verify:
+Verify checksums (optional):
+
+```bash
+sha256sum -c SHA256SUMS        # Linux
+shasum -a 256 -c SHA256SUMS    # macOS
+```
+
+Verify the binary works:
 
 ```bash
 jcm --version
@@ -212,3 +219,5 @@ at your option.
 ## Development
 
 Building, testing, and contributing: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
